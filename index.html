@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="es-CL">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0d0b0a" />
+    <title>MG Fuego y Sabor · Asados a domicilio en Calama</title>
+    <meta name="description" content="Parrillero privado en Calama. Asados a domicilio para cumpleaños, bautizos, empresas y eventos deportivos." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&family=Playfair+Display:wght@600;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-hero.css" />
+    <style>
+      /* Brand tokens: MG Fuego y Sabor runs dark only, gold and flame on near-black. */
+      :root,
+      :root[data-theme="light"],
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --x-gold: #c9a24a;
+        --x-gold-soft: #c9a24a33;
+        --x-flame: #e2471d;
+        --x-flame-2: #ff7a1a;
+        --x-wa: #25d366;
+        --x-display: "Playfair Display", Georgia, "Times New Roman", serif;
+
+        --text-primary: #f3ece2;
+        --text-secondary: #b9ad9d;
+        --text-tertiary: #f3ece24d;
+        --text-primary-on: #0d0b0a;
+        --text-secondary-on: #3a2f1c;
+        --fill-primary: #c9a24a;
+        --fill-primary-on: #0d0b0a;
+        --fill-tertiary: #1a1512;
+        --stroke-primary: #c9a24a4d;
+        --stroke-secondary: #f3ece21a;
+        --stroke-composer: #c9a24a40;
+        --hover-wash: #c9a24a1a;
+        --hover-wash-primary-on: #0d0b0a1f;
+        --mat-agent: rgb(26 21 18 / 0.82);
+        --mat-regular: rgb(13 11 10 / 0.72);
+        --hark-shadow: 0 12px 40px rgb(0 0 0 / 0.5);
+
+        --hero-surface: #0d0b0a;
+        --hero-text: #f3ece2;
+        --hero-text-muted: #f3ece2cc;
+        --hero-scrim-strong: rgb(13 11 10 / 0.92);
+        --hero-scrim-soft: rgb(13 11 10 / 0.55);
+        --hero-scrim-side: rgb(13 11 10 / 0.55);
+        --hero-glass: rgb(13 11 10 / 0.5);
+        --hero-glass-faint: rgb(13 11 10 / 0.4);
+        --hero-glass-stroke: #c9a24a66;
+
+        --type-display: 800 clamp(38px, 8vw, 64px)/1.06 var(--x-display);
+        --type-title: 700 clamp(28px, 4.6vw, 42px)/1.15 var(--x-display);
+        --type-heading: 700 var(--size-heading)/1.25 var(--x-display);
+        --type-numeral: 800 52px/1 var(--x-display);
+        --type-lede: var(--weight-regular) clamp(16px, 1.8vw, 19px)/1.45 var(--sans);
+      }
+      :focus-visible { outline-color: var(--x-gold); }
+      h2 { color: var(--x-gold); }
+      .x-eyebrow { color: var(--x-flame-2) !important; text-transform: uppercase; letter-spacing: 0.12em; font: var(--type-tag) !important; }
+      .x-fire { color: var(--x-flame-2); text-shadow: 0 0 24px #e2471d66; }
+
+      /* Header with the text logo */
+      .x-header {
+        position: sticky;
+        top: calc(env(safe-area-inset-top, 0px) + 10px);
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 8px 8px 8px 16px;
+        border-radius: var(--r-pill);
+        background: var(--mat-regular);
+        -webkit-backdrop-filter: var(--hark-blur);
+        backdrop-filter: var(--hark-blur);
+        border: 1px solid var(--stroke-secondary);
+        box-shadow: var(--hark-shadow);
+      }
+      .x-header__nav { display: flex; gap: 2px; }
+      .x-header__nav a {
+        padding: 10px 12px;
+        border-radius: var(--r-pill);
+        font: var(--type-label);
+        color: var(--text-secondary);
+        text-decoration: none;
+      }
+      .x-header__nav a:hover { color: var(--text-primary); background: var(--hover-wash); }
+      @media (max-width: 760px) { .x-header__nav { display: none; } }
+
+      .x-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); min-height: var(--tap); }
+      .x-logo__mark { position: relative; display: grid; justify-items: center; line-height: 1; }
+      .x-logo__mark svg { width: 16px; height: 18px; margin-bottom: -3px; filter: drop-shadow(0 0 6px #ff7a1a88); }
+      .x-logo__mg { font: 800 26px/1 var(--x-display); color: var(--x-gold); letter-spacing: 0.02em; }
+      .x-logo__name {
+        padding-left: 10px;
+        border-left: 1px solid var(--stroke-primary);
+        font: var(--weight-medium) var(--size-caption)/1.2 var(--sans);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-primary);
+      }
+
+      /* Primary gold button and the hero's height */
+      .btn.x-gold {
+        min-height: 48px;
+        padding: 0 20px;
+        border: 0;
+        border-radius: var(--r-pill);
+        background: var(--x-gold);
+        color: #0d0b0a;
+        font: var(--type-body-strong);
+        box-shadow: 0 6px 24px #c9a24a33;
+      }
+      .btn.x-gold::after { display: none; }
+      .btn.x-ghost {
+        min-height: 48px;
+        padding: 0 20px;
+        border-radius: var(--r-pill);
+        background: transparent;
+        color: var(--text-primary);
+        border-color: var(--x-gold);
+        font: var(--type-body-strong);
+      }
+      .x-hero { min-height: min(86svh, 680px); }
+      .x-hero .hero__copy { max-width: 44rem; }
+      .x-hero .hero__sub { max-width: 46ch; color: var(--hero-text-muted); }
+      .x-hero .links { margin-top: 6px; }
+      .step__num { color: var(--x-gold); }
+
+      /* Menu list */
+      .x-menu { list-style: none; margin: 0; padding: 0; }
+      .x-menu li { display: grid; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--stroke-secondary); }
+      .x-menu li:last-child { border-bottom: 0; }
+      .x-menu strong { font: var(--type-heading); font-size: 18px; color: var(--text-primary); }
+      .x-menu span { color: var(--text-secondary); font-size: var(--size-small); }
+
+      /* Packs */
+      .cards > .x-pick { box-shadow: inset 0 0 0 1.5px var(--x-gold); background: linear-gradient(180deg, #2a1e12, var(--fill-tertiary)); }
+      .x-pack { display: flex; flex-direction: column; gap: 12px; }
+      .x-pack h3 { margin-bottom: 0 !important; color: var(--text-primary); font-size: 24px; }
+      .x-pack .btn { margin-top: auto; justify-content: center; }
+      .x-price { font: 700 var(--size-figure)/1 var(--x-display); color: var(--x-gold); }
+      .x-pack ul li::before { content: "🔥"; margin-right: 8px; font-size: 13px; }
+      .x-pack__top { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+      .x-pack .btn.x-gold, .x-pack .btn.x-ghost { width: 100%; }
+
+      .cards .quote { color: var(--text-primary); font-family: var(--x-display); font-style: italic; font-weight: 600; }
+      .cards h3 { color: var(--text-primary); }
+      .aside { border-color: var(--x-gold); }
+
+      /* Quote form */
+      .x-form {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        padding: clamp(18px, 3vw, 28px);
+        border-radius: var(--r-l);
+        background: var(--fill-tertiary);
+        border: 1px solid var(--stroke-primary);
+      }
+      .x-field { display: grid; gap: 6px; min-width: 0; }
+      .x-field--wide { grid-column: 1 / -1; }
+      .x-field label { font: var(--type-label); color: var(--text-primary); }
+      .x-field input,
+      .x-field select,
+      .x-field textarea {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 14px;
+        border-radius: var(--r-s);
+        border: 1px solid var(--stroke-secondary);
+        background: var(--fill-primary-on);
+        color: var(--text-primary);
+        font: var(--weight-regular) 16px/1.3 var(--sans);
+        color-scheme: dark;
+      }
+      .x-field textarea { min-height: 104px; resize: vertical; }
+      .x-field input:focus,
+      .x-field select:focus,
+      .x-field textarea:focus { outline: 2px solid var(--x-gold); outline-offset: 1px; border-color: transparent; }
+      .x-form .btn.x-gold { grid-column: 1 / -1; width: 100%; justify-content: center; cursor: pointer; font-size: 16px; min-height: 52px; }
+      .x-form .fineprint { grid-column: 1 / -1; }
+      @media (max-width: 599px) { .x-form { grid-template-columns: minmax(0, 1fr); } }
+
+      .x-cities { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-cities .pill { padding: 6px 12px; font-size: var(--size-small); }
+      .x-cities .pill:first-child { background: var(--x-gold); color: #0d0b0a; }
+
+      /* Floating WhatsApp button */
+      .x-wa {
+        position: fixed;
+        right: max(16px, env(safe-area-inset-right));
+        bottom: max(16px, env(safe-area-inset-bottom));
+        z-index: 40;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 58px;
+        min-width: 58px;
+        padding: 0 18px 0 16px;
+        border-radius: var(--r-pill);
+        background: var(--x-wa);
+        color: #0b2a17;
+        font: var(--type-body-strong);
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgb(0 0 0 / 0.5), 0 0 0 4px #25d36626;
+        transition: transform var(--dur-quick) var(--ease-out);
+      }
+      .x-wa:hover { transform: translateY(-2px); }
+      .x-wa svg { width: 26px; height: 26px; flex: none; }
+      @media (max-width: 599px) { .x-wa { padding: 0; justify-content: center; } .x-wa span { display: none; } }
+
+      /* Tu parrillero */
+      .x-chef { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(20px, 4vw, 40px); align-items: center; }
+      .x-chef__photo { margin: 0; aspect-ratio: 3 / 4; border-radius: var(--r-l); overflow: hidden; border: 1px solid var(--stroke-primary); background: var(--fill-tertiary); }
+      .x-chef__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .x-chef .prose p:first-child { font: var(--type-lede); color: var(--text-primary); }
+      @media (max-width: 599px) { .x-chef { grid-template-columns: minmax(0, 1fr); } .x-chef__photo { max-width: 280px; } }
+
+      /* Galería */
+      .x-gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+      @media (max-width: 760px) { .x-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .x-gallery button { display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0; border: 1px solid var(--stroke-primary); border-radius: var(--r-m); overflow: hidden; background: var(--fill-tertiary); cursor: zoom-in; }
+      .x-gallery img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--dur-quick) var(--ease-out); }
+      .x-gallery button:hover img { transform: scale(1.03); }
+      .x-gallery button:focus-visible { outline: 2px solid var(--x-gold); outline-offset: 2px; }
+      .x-lightbox { padding: 0; border: 0; background: transparent; max-width: 100vw; max-height: 100svh; }
+      .x-lightbox::backdrop { background: rgb(13 11 10 / 0.9); }
+      .x-lightbox img { display: block; max-width: min(92vw, 640px); max-height: 86svh; width: auto; height: auto; border-radius: var(--r-m); border: 1px solid var(--stroke-primary); }
+      .x-lightbox p { margin: 10px 0 0; text-align: center; font: var(--type-small); color: var(--text-secondary); }
+      .x-lightbox__close { position: fixed; top: max(16px, env(safe-area-inset-top)); right: 16px; width: var(--tap); height: var(--tap); border-radius: var(--r-pill); border: 1px solid var(--stroke-primary); background: var(--mat-regular); color: var(--text-primary); font: var(--type-heading); cursor: pointer; }
+
+      .x-foot { padding-bottom: 88px; }
+      .x-foot__brand { display: grid; gap: 10px; }
+      .x-foot .links .btn { border-color: var(--stroke-primary); }
+      .x-demo { font-size: var(--size-caption); color: var(--text-secondary); opacity: 0.8; }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <header class="x-header">
+        <a class="x-logo" href="#top" aria-label="MG Fuego y Sabor, inicio">
+          <span class="x-logo__mark">
+            <svg viewBox="0 0 24 28" aria-hidden="true">
+              <defs>
+                <linearGradient id="flame" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0" stop-color="#e2471d" />
+                  <stop offset="1" stop-color="#ff7a1a" />
+                </linearGradient>
+              </defs>
+              <path fill="url(#flame)" d="M12 1c1.2 4.2-1.8 6-1.8 9 0 1.4.9 2.4 2.1 2.4 1.7 0 2.4-1.6 2-3.6 2.7 1.9 4.2 4.8 4.2 7.8A6.5 6.5 0 0 1 12 23a6.5 6.5 0 0 1-6.5-6.4C5.5 11.2 10.8 8.8 12 1z" />
+              <path fill="#ffcf6b" d="M12 14.5c.4 1.6-.6 2.4-.6 3.6 0 .8.6 1.4 1.3 1.4 1 0 1.5-.9 1.3-2 1 .8 1.5 1.8 1.5 2.7A3.5 3.5 0 0 1 12 23.5a3.5 3.5 0 0 1-3.5-3.3c0-2.6 2.6-3.6 3.5-5.7z" />
+            </svg>
+            <span class="x-logo__mg">MG</span>
+          </span>
+          <span class="x-logo__name">Fuego<br />y Sabor</span>
+        </a>
+        <nav class="x-header__nav" aria-label="Secciones">
+          <a href="#como">Cómo funciona</a>
+          <a href="#carta">Carta</a>
+          <a href="#packs">Packs</a>
+          <a href="#eventos">Eventos</a>
+          <a href="#cotiza">Cotiza</a>
+        </nav>
+        <a class="btn x-gold" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado" target="_blank" rel="noopener">Cotizar</a>
+      </header>
+
+      <main class="main">
+        <section class="hero x-hero">
+          <img class="hero__img" src="hero-asado.png" alt="Parrilla de ladrillo con costillar y cortes de vacuno sobre las brasas, al atardecer en el desierto" />
+          <div class="hero__copy">
+            <p class="hero__eyebrow">Asados a domicilio · Calama</p>
+            <h1>Tú disfrutas, <span class="x-fire">yo llevo el fuego.</span></h1>
+            <p class="hero__sub">Parrillero privado para cumpleaños, bautizos, empresas y eventos deportivos. Llevo la parrilla, el montaje y la sazón premium.</p>
+            <div class="links">
+              <a class="btn x-gold" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado" target="_blank" rel="noopener">Cotiza por WhatsApp</a>
+              <a class="btn x-ghost" href="#packs">Ver packs</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="parrillero">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Tu parrillero</p>
+            <h2>Mario, parrillero de Calama.</h2>
+          </div>
+          <div class="x-chef">
+            <figure class="x-chef__photo">
+              <img src="mg-mario-retrato.jpg" alt="Mario, parrillero de MG Fuego y Sabor, sonriendo con chaqueta negra y la bandera de Chile" />
+            </figure>
+            <div class="prose">
+              <p>Soy Mario, parrillero de Calama. Llevo el fuego, el montaje y la sazón a tu evento para que tú solo te preocupes de disfrutar con los tuyos.</p>
+              <p class="fineprint">Más de 1.500 seguidores en <a class="link" href="https://www.instagram.com/mg_fuegoysabor/" target="_blank" rel="noopener">Instagram</a></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="como">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Cómo funciona</p>
+            <h2>Tres pasos y el asado está listo.</h2>
+            <p class="head__sub">Tu parrillero MG se encarga de todo, de principio a fin.</p>
+          </div>
+          <div class="steps">
+            <article class="step">
+              <div class="step__intro"><p class="step__num">01</p><p class="step__eyebrow">Me escribes</p></div>
+              <div>
+                <h3>Me cuentas fecha, lugar y número de personas.</h3>
+                <p class="sub">Por WhatsApp o con el formulario de cotización.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">02</p><p class="step__eyebrow">Te cotizo</p></div>
+              <div>
+                <h3>Te envío una cotización a tu medida.</h3>
+                <p class="sub">Según tus invitados, las carnes que prefieras y el tipo de evento.</p>
+              </div>
+            </article>
+            <article class="step">
+              <div class="step__intro"><p class="step__num">03</p><p class="step__eyebrow">Llego con todo</p></div>
+              <div>
+                <h3>Parrilla, carnes, montaje y sazón.</h3>
+                <p class="sub">Tú solo disfrutas.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="carta">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">La carta</p>
+            <h2>Lo que sale de la parrilla.</h2>
+            <p class="head__sub">Carnes seleccionadas, fuego lento y sazón de la casa.</p>
+          </div>
+          <div class="pair">
+            <figure class="band">
+              <img src="costillar.png" alt="Costillar asado con chimichurri sobre una tabla de madera" />
+              <figcaption>Costillar al chimichurri, la especialidad de la casa</figcaption>
+            </figure>
+            <ul class="x-menu">
+              <li><strong>Costillar a la chilena</strong><span>Dorado lento, jugoso por dentro y crocante por fuera.</span></li>
+              <li><strong>Costillar al chimichurri</strong><span>Bañado en chimichurri fresco de perejil, ajo y ají.</span></li>
+              <li><strong>Costillar tradicional</strong><span>Solo sal de mar y fuego: el sabor de siempre.</span></li>
+              <li><strong>Asado de vacuno</strong><span>Cortes a punto, sellados a la brasa y servidos al momento.</span></li>
+              <li><strong>Pollo a las brasas</strong><span>Marinado de la casa, piel dorada y carne tierna.</span></li>
+              <li><strong>Vienesas y choripanes</strong><span>Los favoritos de los niños, y de los grandes también.</span></li>
+              <li><strong>Carnes al spiedo</strong><span>Girando lento sobre el fuego para los eventos grandes.</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="packs">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Packs para tu evento</p>
+            <h2>Elige el tamaño, yo pongo el fuego.</h2>
+            <p class="head__sub">Cada pack se cotiza a tu medida, según invitados y carnes.</p>
+          </div>
+          <div class="cards">
+            <div class="x-pack">
+              <div class="x-pack__top"><span class="pill">Hasta 15 personas</span></div>
+              <h3>Pack Familiar</h3>
+              <p class="sub">Cumpleaños y juntas familiares.</p>
+              <p class="x-price">Cotiza</p>
+              <ul>
+                <li>Parrillero en tu evento</li>
+                <li>Carnes a elección</li>
+                <li>Montaje</li>
+              </ul>
+              <a class="btn x-ghost" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado%20(Pack%20Familiar)" target="_blank" rel="noopener">Cotizar este pack</a>
+            </div>
+            <div class="x-pack x-pick">
+              <div class="x-pack__top"><span class="pill">15 a 40 personas</span><span class="chip chip--solid">Más pedido</span></div>
+              <h3>Pack Celebración</h3>
+              <p class="sub">Bautizos, matrimonios y aniversarios.</p>
+              <p class="x-price">Cotiza</p>
+              <ul>
+                <li>Parrillero en tu evento</li>
+                <li>Carnes a elección</li>
+                <li>Montaje</li>
+              </ul>
+              <a class="btn x-gold" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado%20(Pack%20Celebraci%C3%B3n)" target="_blank" rel="noopener">Cotizar este pack</a>
+            </div>
+            <div class="x-pack">
+              <div class="x-pack__top"><span class="pill">40+ personas</span></div>
+              <h3>Pack Empresa</h3>
+              <p class="sub">Eventos corporativos, fiestas de fin de año y deportes.</p>
+              <p class="x-price">Cotiza</p>
+              <ul>
+                <li>Parrillero en tu evento</li>
+                <li>Carnes a elección</li>
+                <li>Montaje</li>
+              </ul>
+              <a class="btn x-ghost" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado%20(Pack%20Empresa)" target="_blank" rel="noopener">Cotizar este pack</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="eventos">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Eventos</p>
+            <h2>Para cada celebración, una parrilla encendida.</h2>
+          </div>
+          <figure class="band">
+            <img src="evento.png" alt="Fiesta al aire libre con la parrilla cargada de carnes" />
+          </figure>
+          <div class="cards">
+            <div><h3>Cumpleaños</h3><p class="sub">Celebra en casa sin pasar la tarde frente al fuego.</p></div>
+            <div><h3>Bautizos</h3><p class="sub">Un almuerzo a la altura del día, para toda la familia.</p></div>
+            <div><h3>Empresas</h3><p class="sub">Fin de año, aniversarios y equipos de turno en faena.</p></div>
+            <div><h3>Pádel y deportes</h3><p class="sub">El tercer tiempo con asado después del partido o torneo.</p></div>
+          </div>
+          <div class="aside">
+            <h3>Fuego y mar</h3>
+            <p class="fineprint">Para eventos especiales, experiencias de parrilla y mar junto a socios locales de productos del mar: ostiones, ceviches y más. Pregunta por esta opción al cotizar.</p>
+          </div>
+        </section>
+
+        <section class="section" id="galeria">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Galería</p>
+            <h2>Directo desde la parrilla.</h2>
+            <p class="head__sub">Fotos reales de eventos de MG Fuego y Sabor. Toca una para verla en grande.</p>
+          </div>
+          <ul class="x-gallery">
+            <li><button type="button" aria-label="Ampliar foto: parrilla cargada de carnes"><img src="mg-parrilla-carnes.jpg" alt="Parrilla cargada con bifes, cerdo y longanizas" /></button></li>
+            <li><button type="button" aria-label="Ampliar foto: carne en la parrilla"><img src="mg-asado-parrilla.jpg" alt="Carne en la parrilla dada vuelta con pinzas" loading="lazy" /></button></li>
+            <li><button type="button" aria-label="Ampliar foto: Mario en la parrilla"><img src="mg-mario-parrillando.jpg" alt="Mario trabajando en una parrilla de ladrillo, de espaldas" loading="lazy" /></button></li>
+            <li><button type="button" aria-label="Ampliar foto: ostiones a la parrilla"><img src="mg-ostiones.jpg" alt="Parrilla redonda llena de ostiones en un evento de fuego y mar" loading="lazy" /></button></li>
+          </ul>
+          <div class="links">
+            <a class="btn x-ghost" href="https://www.instagram.com/mg_fuegoysabor/" target="_blank" rel="noopener">Ver más en Instagram</a>
+          </div>
+          <dialog class="x-lightbox" id="lightbox" aria-label="Foto ampliada">
+            <button class="x-lightbox__close" type="button" aria-label="Cerrar">×</button>
+            <img alt="" />
+            <p></p>
+          </dialog>
+        </section>
+
+        <section class="section" id="clientes">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Lo que dicen mis clientes</p>
+            <h2>Asados que se recuerdan.</h2>
+          </div>
+          <div class="cards">
+            <div>
+              <p class="quote">“Llegó puntual, armó todo y el costillar quedó increíble. Yo solo me preocupé de mis invitados.”</p>
+              <p class="sub">Carolina, cumpleaños</p>
+            </div>
+            <div>
+              <p class="quote">“Sesenta personas atendidas sin problemas. La mejor fiesta de fin de año que hemos tenido.”</p>
+              <p class="sub">Equipo minero, fin de año</p>
+            </div>
+            <div>
+              <p class="quote">“Muy atento con la familia y las carnes en su punto. Lo volvemos a llamar seguro.”</p>
+              <p class="sub">Felipe, bautizo</p>
+            </div>
+          </div>
+          <p class="fineprint">Testimonios de ejemplo para esta versión de muestra.</p>
+        </section>
+
+        <section class="section" id="cotiza">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Cotiza tu asado</p>
+            <h2>Cuéntame de tu evento.</h2>
+            <p class="head__sub">Al enviar se abre WhatsApp con tu mensaje listo para Mario.</p>
+          </div>
+          <form class="x-form" id="cotizar" novalidate>
+            <div class="x-field">
+              <label for="f-nombre">Nombre</label>
+              <input id="f-nombre" name="nombre" type="text" autocomplete="name" placeholder="Tu nombre" required />
+            </div>
+            <div class="x-field">
+              <label for="f-fecha">Fecha del evento</label>
+              <input id="f-fecha" name="fecha" type="date" />
+            </div>
+            <div class="x-field">
+              <label for="f-personas">Número de personas</label>
+              <input id="f-personas" name="personas" type="number" inputmode="numeric" min="1" placeholder="Ej: 25" />
+            </div>
+            <div class="x-field">
+              <label for="f-tipo">Tipo de evento</label>
+              <select id="f-tipo" name="tipo">
+                <option>Cumpleaños</option>
+                <option>Bautizo</option>
+                <option>Empresa</option>
+                <option>Deportivo</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="x-field x-field--wide">
+              <label for="f-comentarios">Comentarios</label>
+              <textarea id="f-comentarios" name="comentarios" placeholder="Lugar, carnes que prefieres, horario…"></textarea>
+            </div>
+            <button class="btn x-gold" type="submit">Enviar por WhatsApp</button>
+            <p class="fineprint">Sin compromiso. Respondo con tu cotización por WhatsApp.</p>
+          </form>
+        </section>
+
+        <section class="section" id="cobertura">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Cobertura</p>
+            <h2>Calama y alrededores.</h2>
+            <p class="head__sub">Consulta por Antofagasta, Tocopilla y otras ciudades de la II Región.</p>
+          </div>
+          <div class="x-cities">
+            <span class="pill">Calama y alrededores</span>
+            <span class="pill">Antofagasta · consultar</span>
+            <span class="pill">Tocopilla · consultar</span>
+            <span class="pill">Otras ciudades de la II Región · consultar</span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="foot x-foot">
+        <div class="x-foot__brand">
+          <a class="x-logo" href="#top" aria-label="MG Fuego y Sabor, volver arriba">
+            <span class="x-logo__mark">
+              <svg viewBox="0 0 24 28" aria-hidden="true">
+                <path fill="url(#flame)" d="M12 1c1.2 4.2-1.8 6-1.8 9 0 1.4.9 2.4 2.1 2.4 1.7 0 2.4-1.6 2-3.6 2.7 1.9 4.2 4.8 4.2 7.8A6.5 6.5 0 0 1 12 23a6.5 6.5 0 0 1-6.5-6.4C5.5 11.2 10.8 8.8 12 1z" />
+                <path fill="#ffcf6b" d="M12 14.5c.4 1.6-.6 2.4-.6 3.6 0 .8.6 1.4 1.3 1.4 1 0 1.5-.9 1.3-2 1 .8 1.5 1.8 1.5 2.7A3.5 3.5 0 0 1 12 23.5a3.5 3.5 0 0 1-3.5-3.3c0-2.6 2.6-3.6 3.5-5.7z" />
+              </svg>
+              <span class="x-logo__mg">MG</span>
+            </span>
+            <span class="x-logo__name">Fuego<br />y Sabor</span>
+          </a>
+          <p>MG Fuego y Sabor · Asados a domicilio · Calama, Chile</p>
+          <p class="x-demo">Versión de muestra</p>
+        </div>
+        <div class="links">
+          <a class="btn" href="https://www.instagram.com/mg_fuegoysabor/" target="_blank" rel="noopener">Instagram</a>
+          <a class="btn" href="https://www.tiktok.com/@mario._.german" target="_blank" rel="noopener">TikTok</a>
+          <a class="btn" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </footer>
+    </div>
+
+    <a class="x-wa" href="https://wa.me/56900000000?text=Hola%20Mario%2C%20quiero%20cotizar%20un%20asado" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.3 21.7l4.7-1.2A9.8 9.8 0 1 0 12 2.2z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round" />
+        <path fill="#fff" d="M8.6 7.3c.3-.3.8-.3 1 .1l.9 1.9c.1.3 0 .6-.2.8l-.6.6c.6 1.3 1.7 2.4 3 3l.6-.6c.2-.2.5-.3.8-.2l1.9.9c.4.2.4.7.1 1-.9 1-2.3 1.2-3.5.6-2-1-3.6-2.6-4.6-4.6-.6-1.2-.4-2.6.6-3.5z" />
+      </svg>
+      <span>WhatsApp</span>
+    </a>
+
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var box = document.getElementById("lightbox");
+        if (!box || typeof box.showModal !== "function") return;
+        var big = box.querySelector("img");
+        var cap = box.querySelector("p");
+        document.querySelectorAll(".x-gallery button").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var img = btn.querySelector("img");
+            big.setAttribute("src", img.currentSrc || img.getAttribute("src"));
+            big.alt = img.alt;
+            cap.textContent = img.alt;
+            box.showModal();
+          });
+        });
+        box.querySelector(".x-lightbox__close").addEventListener("click", function () { box.close(); });
+        box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
+      })();
+    </script>
+    <script>
+      (function () {
+        var form = document.getElementById("cotizar");
+        if (!form) return;
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var v = function (n) { return (form.elements[n].value || "").trim(); };
+          var fecha = v("fecha");
+          if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) { var p = fecha.split("-"); fecha = p[2] + "-" + p[1] + "-" + p[0]; }
+          var lines = ["Hola Mario, quiero cotizar un asado."];
+          if (v("nombre")) lines.push("Nombre: " + v("nombre"));
+          if (fecha) lines.push("Fecha del evento: " + fecha);
+          if (v("personas")) lines.push("Número de personas: " + v("personas"));
+          lines.push("Tipo de evento: " + v("tipo"));
+          if (v("comentarios")) lines.push("Comentarios: " + v("comentarios"));
+          var url = "https://wa.me/56900000000?text=" + encodeURIComponent(lines.join("\n"));
+          var win = window.open(url, "_blank");
+          if (win) { win.opener = null; } else { window.location.href = url; }
+        });
+      })();
+    </script>
+  </body>
+</html>
