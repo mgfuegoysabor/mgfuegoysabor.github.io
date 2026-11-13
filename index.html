@@ -141,6 +141,10 @@
 
       /* Packs */
       .cards > .x-pick { box-shadow: inset 0 0 0 1.5px var(--x-gold); background: linear-gradient(180deg, #2a1e12, var(--fill-tertiary)); }
+      .x-quotes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+      .x-quotes blockquote { margin: 0; height: 100%; padding: 20px 20px 18px; border: 1px solid var(--stroke-secondary); border-left: 3px solid var(--x-flame-2); border-radius: 14px; display: flex; flex-direction: column; gap: 12px; }
+      .x-quotes p { margin: 0; font: italic 500 19px/1.4 var(--x-display); color: var(--text-primary); }
+      .x-quotes footer { margin-top: auto; font-size: var(--size-small); color: var(--x-gold); letter-spacing: 0.04em; }
       .x-pack { display: flex; flex-direction: column; gap: 12px; }
       .x-pack h3 { margin-bottom: 0 !important; color: var(--text-primary); font-size: 24px; }
       .x-pack .btn { margin-top: auto; justify-content: center; }
@@ -469,6 +473,25 @@
             <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" />
             <p></p>
           </dialog>
+        </section>
+
+        <section class="section" id="clientes">
+          <div class="head">
+            <p class="head__eyebrow x-eyebrow">Clientes</p>
+            <h2>Lo que dicen de la parrilla.</h2>
+            <p class="head__sub">Comentarios reales de clientes y amigos en el Instagram de MG Fuego y Sabor.</p>
+          </div>
+          <ul class="x-quotes">
+            <li><blockquote><p>“¡Los más mejores! ❤️🔥 Sin gluten.”</p><footer>T. T.</footer></blockquote></li>
+            <li><blockquote><p>“Obvio que yo tengo el mejor momento con el Capo de la Parrilla 🔥🔥”</p><footer>D. J.</footer></blockquote></li>
+            <li><blockquote><p>“Yo tengo los mejores momentos con karaoke asado, gran amigo 🔥🙌”</p><footer>M. S.</footer></blockquote></li>
+            <li><blockquote><p>“Yo tengo el mejor momento con mi parrillero estrella 🔥”</p><footer>I. V.</footer></blockquote></li>
+            <li><blockquote><p>“Mucho éxito en todo lo que realiza, saludos y cariños 🔥🍖”</p><footer>P. A., ganadora del sorteo del costillar</footer></blockquote></li>
+            <li><blockquote><p>“¡Me encanta! ❤️”</p><footer>R. O.</footer></blockquote></li>
+          </ul>
+          <div class="links">
+            <a class="btn x-ghost" href="https://www.instagram.com/mg_fuegoysabor/" target="_blank" rel="noopener">Ver más en Instagram</a>
+          </div>
         </section>
 
         <section class="section" id="cotiza">
