@@ -1,4 +1,4 @@
-/* Page behaviors for Hark's component library: the nav, the theme toggle, tables, line charts and images. style-gates: data */
+/* Page behaviors for Hark's component library: the nav, the theme toggle, tables and images. style-gates: data */
 (function () {
   "use strict";
   var doc = document, root = doc.documentElement;
@@ -11,65 +11,29 @@
     });
   }
   function each(a, f) { return (a || []).map(f).join(""); }
-  function pad2(n) { return (n < 10 ? "0" : "") + n; }
-
-  function niceBounds(vals) {
-    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
-    var step = Math.pow(10, Math.floor(Math.log10(Math.max(hi - lo, 1e-9))));
-    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
-    return hi === lo ? [lo - step, hi + step] : [lo, hi];
-  }
-  function fmtNum(v) { return Number(v).toLocaleString("en-US", { maximumFractionDigits: 2 }); }
-  function chartSVG(pts, opt, W) {
-    W = Math.max(320, Math.round(W || 960));
-    var L = 40, R = W - 40, T = 30, Bt = 210;
-    var stagger = pts.length > 1 && (R - L) / (pts.length - 1) < 96;
-    var nameY = function (i) { return 236 + (stagger && i % 2 ? 16 : 0); };
-    var valueY = function (i, py) { return stagger && i % 2 ? Math.min(py + 22, Bt - 4) : py - 13; };
-    var H = (opt.numbered ? 268 : 248) + (stagger ? 16 : 0);
-    var bounds = niceBounds(pts.length ? pts.map(function (p) { return +p[1]; }) : [0, 1]), lo = bounds[0], hi = bounds[1];
-    var x = function (i) { return L + (R - L) * (pts.length < 2 ? 0.5 : i / (pts.length - 1)); };
-    var y = function (v) { return Bt - (Bt - T) * (v - lo) / (hi - lo || 1); };
-    var unit = opt.unit ? " " + opt.unit : "";
-    var line = pts.map(function (p, i) { return (i ? "L" : "M") + x(i).toFixed(1) + "," + y(p[1]).toFixed(1); }).join(" ");
-    var svg = '<g class="pf-grid">' + [30, 120, 210].map(function (gy) { return '<line x1="' + L + '" y1="' + gy + '" x2="' + R + '" y2="' + gy + '"></line>'; }).join("") + "</g>" +
-      '<text class="pf-axis" x="0" y="34">' + fmtNum(hi) + '</text><text class="pf-axis" x="0" y="124">' + fmtNum((lo + hi) / 2) + '</text><text class="pf-axis" x="0" y="214">' + fmtNum(lo) + "</text>" +
-      '<path class="pf-fill" d="' + line + " L" + R + "," + Bt + " L" + L + "," + Bt + ' Z"></path><path class="pf-line" d="' + line + '"></path>';
-    pts.forEach(function (p, i) {
-      var anchor = i === 0 ? ' text-anchor="start"' : i === pts.length - 1 ? ' text-anchor="end"' : "";
-      svg += '<circle class="pf-dot" cx="' + x(i) + '" cy="' + y(p[1]) + '" r="4.5"></circle>' +
-        '<text class="pf-alt" x="' + x(i) + '" y="' + valueY(i, y(p[1])) + '"' + anchor + ">" + esc(fmtNum(p[1]) + unit) + "</text>" +
-        '<text class="pf-name" x="' + x(i) + '" y="' + nameY(i) + '"' + anchor + ">" + esc(p[0]) + "</text>";
-      if (i && opt.numbered) svg += '<text class="pf-num" x="' + ((x(i - 1) + x(i)) / 2) + '" y="' + (H - 10) + '">' + pad2(i) + "</text>";
-    });
-    return ((opt.caption ? '<p class="chart__cap">' + esc(opt.caption) + "</p>" : "") +
-      '<svg viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(opt.label || opt.caption || "Line chart") + '">' + svg + "</svg>");
-  }
-
-  function contentWidth(el) {
-    var cs = getComputedStyle(el);
-    return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  }
-  function drawCharts() {
-    [].slice.call(doc.querySelectorAll(".chart[data-points]")).forEach(function (p) {
-      var pts = p.getAttribute("data-points").split(",").map(function (x) { var m = x.split(":"); return [m[0].trim(), +m[1]]; });
-      p.innerHTML = chartSVG(pts, { caption: p.getAttribute("data-caption"), unit: p.getAttribute("data-unit"),
-        label: p.getAttribute("aria-label"), numbered: p.hasAttribute("data-numbered") }, contentWidth(p));
+  function navLink(s) { return '<a href="#' + esc(s.id) + '" data-for="' + esc(s.id) + '">' + esc(s.getAttribute("data-nav")) + "</a>"; }
+  // A section the page hides (an owner-only one, until the app says who is reading) drops out of
+  // the nav, and comes back when the page shows it. The link's own display is set, since .seg a sets one.
+  function syncNav() {
+    [].slice.call(doc.querySelectorAll("a[data-for]")).forEach(function (a) {
+      var s = doc.getElementById(a.getAttribute("data-for"));
+      a.style.display = s && s.closest("[hidden]") ? "none" : "";
     });
   }
   function autoNav() {
     var sections = [].slice.call(doc.querySelectorAll("section[data-nav]"));
     var header = doc.querySelector("header.nav[data-auto]");
     if (header) {
-      header.innerHTML = '<nav class="seg" aria-label="Sections">' +
-        each(sections, function (s) { return '<a href="#' + esc(s.id) + '">' + esc(s.getAttribute("data-nav")) + "</a>"; }) + "</nav>" +
+      header.innerHTML = '<nav class="seg" aria-label="Sections">' + each(sections, navLink) + "</nav>" +
         '<button class="theme-btn" id="theme-btn" type="button" aria-label="Switch to dark theme"></button>';
     }
     [].slice.call(doc.querySelectorAll(".foot nav[data-auto]")).forEach(function (n) {
-      n.innerHTML = '<a href="#top">Top</a>' + each(sections, function (s) { return '<a href="#' + esc(s.id) + '">' + esc(s.getAttribute("data-nav")) + "</a>"; });
+      n.innerHTML = '<a href="#top">Top</a>' + each(sections, navLink);
     });
-    drawCharts();
-    window.addEventListener("resize", function () { clearTimeout(drawCharts.t); drawCharts.t = setTimeout(drawCharts, 150); }, { passive: true });
+    syncNav();
+    if (sections.length && window.MutationObserver) {
+      new MutationObserver(syncNav).observe(doc.body, { attributes: true, attributeFilter: ["hidden"], subtree: true });
+    }
     [].slice.call(doc.querySelectorAll(".table-wrap table")).forEach(function (t) {
       var names = [].map.call(t.querySelectorAll("thead th"), function (th) { return th.textContent.trim(); });
       [].slice.call(t.querySelectorAll("tbody tr")).forEach(function (tr) {
@@ -147,7 +111,7 @@
       };
       var sync = function (force) {
         var line = window.innerHeight * 0.32, cur = -1;
-        targets.forEach(function (t, i) { if (t && t.getBoundingClientRect().top <= line) cur = i; });
+        targets.forEach(function (t, i) { if (t && !t.closest("[hidden]") && t.getBoundingClientRect().top <= line) cur = i; });
         if (cur === active && !force) return;
         active = cur;
         links.forEach(function (a, i) { if (i === cur) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
@@ -159,17 +123,11 @@
         window.requestAnimationFrame(function () { sync(false); ticking = false; });
       }, { passive: true });
       window.addEventListener("resize", function () { sync(true); }, { passive: true });
+      if (window.MutationObserver) new MutationObserver(function () { sync(true); }).observe(doc.body, { attributes: true, attributeFilter: ["hidden"], subtree: true });
       if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(function () { sync(true); });
       sync(true);
     }
 
-    [].slice.call(doc.querySelectorAll(".chart")).forEach(function (chart) {
-      if (reduce || !("IntersectionObserver" in window)) { chart.classList.add("is-in"); return; }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (e.isIntersecting) { chart.classList.add("is-in"); io.disconnect(); } });
-      }, { threshold: 0.3 });
-      io.observe(chart);
-    });
   }
 
   function start() {
